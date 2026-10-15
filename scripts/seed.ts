@@ -21,7 +21,7 @@ initializeApp({
 const auth = getAuth();
 const db = getFirestore();
 
-type Perfil = "ADMIN" | "COORDENADOR" | "ORIENTADOR" | "AVALIADOR" | "ALUNO";
+type Perfil = "ADMIN" | "COORDENACAO" | "ORIENTADOR" | "AVALIADOR" | "ALUNO";
 
 async function criarUsuario(
   nome: string,
@@ -82,6 +82,7 @@ async function main() {
     statusGeral: "EM_ANDAMENTO",
     aluno_id: "2026001",
     orientador_id: joana,
+    avaliadoresUids: [silvia],
   });
   await db.collection("tccs").doc("tcc-maria").set({
     id: "tcc-maria",
@@ -94,7 +95,7 @@ async function main() {
   // 5. Entrega com versão e feedback (histórico para testar RN02 / US04)
   await db.collection("entregas").doc("entrega-maria-1").set({
     id: "entrega-maria-1",
-    status: "CORRECAO_SOLICITADA",
+    status: "SOLICITADA_CORRECAO",
     dataSubmissao: Timestamp.now(),
     marco_id: "qualificacao",
     tcc_id: "tcc-maria",
