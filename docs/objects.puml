@@ -1,0 +1,92 @@
+@startuml
+skinparam objectAttributeIconSize 0
+skinparam linetype ortho
+
+object "aluno: Aluno" as aluno {
+    id = "uid-aluno-001"
+    nome = "Ana Souza"
+    email = "ana.souza@instituicao.edu.br"
+    perfil = ALUNO
+    matricula = "20260001"
+}
+
+object "orientador: ProfessorOrientador" as orientador {
+    id = "uid-orientador-001"
+    nome = "Carlos Lima"
+    email = "carlos.lima@instituicao.edu.br"
+    perfil = ORIENTADOR
+}
+
+object "avaliador: ProfessorAvaliador" as avaliador {
+    id = "uid-avaliador-001"
+    nome = "Marina Alves"
+    email = "marina.alves@instituicao.edu.br"
+    perfil = AVALIADOR
+}
+
+object "coordenador: Coordenador" as coordenador {
+    id = "uid-coordenacao-001"
+    nome = "Rafael Costa"
+    email = "rafael.costa@instituicao.edu.br"
+    perfil = COORDENACAO
+}
+
+object "administrador: Usuario" as administrador {
+    id = "uid-admin-001"
+    nome = "Beatriz Martins"
+    email = "beatriz.martins@instituicao.edu.br"
+    perfil = ADMIN
+}
+
+object "tcc: TCC" as tcc {
+    id = "tcc-001"
+    titulo = "Sistema de Gestão de TCC"
+    statusGeral = EM_ANDAMENTO
+}
+
+object "marco: MarcoCronograma" as marco {
+    id = "marco-001"
+    titulo = "Entrega da fundamentação"
+    dataLimite = "2026-09-30"
+}
+
+object "entrega: Entrega" as entrega {
+    id = "entrega-001"
+    status = CONCLUIDA
+    dataSubmissao = "2026-09-28"
+}
+
+object "arquivoV1: VersaoArquivo" as arquivoV1 {
+    id = "arquivo-001"
+    numeroVersao = 1
+    arquivoUrl = "gs://sgtcc-projeto/documentos/tcc-001/v1.pdf"
+}
+
+object "arquivoV2: VersaoArquivo" as arquivoV2 {
+    id = "arquivo-002"
+    numeroVersao = 2
+    arquivoUrl = "gs://sgtcc-projeto/documentos/tcc-001/v2.pdf"
+}
+
+object "feedback: Feedback" as feedback {
+    id = "feedback-001"
+    comentario = "A fundamentação foi aprovada."
+}
+
+object "notificacao: Notificacao" as notificacao {
+    id = "notificacao-001"
+    mensagem = "Novo feedback disponível."
+    lida = false
+}
+
+aluno -- tcc : "possui"
+orientador -- aluno : "orienta"
+tcc -- marco : "contém"
+marco -- entrega : "gera"
+entrega -- arquivoV1 : "possui"
+entrega -- arquivoV2 : "possui"
+entrega -- feedback : "recebe"
+avaliador -- tcc : "avalia"
+aluno -- notificacao : "recebe"
+
+@enduml
