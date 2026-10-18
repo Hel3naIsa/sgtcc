@@ -124,10 +124,10 @@ export default function Home() {
 
               <div className="pt-2 flex flex-wrap gap-3">
                 <Link
-                  href="#login-mock"
+                  href="/login"
                   className={buttonVariants({ variant: "default" })}
                 >
-                  Iniciar Desenvolvimento RF01
+                  Entrar no sistema
                 </Link>
                 <a
                   href="https://github.com/m8wstd/sgtcc"
