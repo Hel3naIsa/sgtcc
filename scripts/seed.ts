@@ -43,7 +43,7 @@ async function criarUsuario(
 async function main() {
   // 1. Usuários (Auth + claims + doc em /usuarios)
   await criarUsuario("Administrador", "admin@teste.sgtcc.dev", "ADMIN");
-  const claudio = await criarUsuario("Cláudio Carvalho", "claudio@teste.sgtcc.dev", "COORDENADOR");
+  const claudio = await criarUsuario("Cláudio Carvalho", "claudio@teste.sgtcc.dev", "COORDENACAO");
   const joana = await criarUsuario("Joana Jordão", "joana@teste.sgtcc.dev", "ORIENTADOR");
   const orient2 = await criarUsuario("Orientador Antigo", "orientador2@teste.sgtcc.dev", "ORIENTADOR");
   const silvia = await criarUsuario("Silvia Silva", "silvia@teste.sgtcc.dev", "AVALIADOR");
