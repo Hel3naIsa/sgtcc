@@ -21,21 +21,25 @@ export function LogoutButton() {
         credentials: "same-origin",
         headers: { "X-CSRF-Token": csrfToken },
       });
-      // Encerra também a sessão local do SDK do Firebase (import dinâmico: só no navegador).
       const [{ signOut }, { auth }] = await Promise.all([
         import("firebase/auth"),
         import("@/lib/firebase/config"),
       ]);
       await signOut(auth);
     } finally {
-      router.replace("/login");
-      router.refresh();
+      window.location.href = "/login";
     }
   }
 
   return (
-    <Button variant="outline" size="sm" onClick={sair} disabled={saindo}>
-      <LogOut /> Sair
+    <Button
+      variant="outline"
+      size="sm"
+      onClick={sair}
+      disabled={saindo}
+      className="w-full text-xs border-[#243558] text-white/90 bg-transparent hover:bg-[#1a2a4a] hover:text-white flex items-center justify-center gap-1.5"
+    >
+      <LogOut className="h-3.5 w-3.5" /> Sair da Conta
     </Button>
   );
 }

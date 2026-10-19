@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SGTCC</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff;--card:#f4f5f7;--tx:#111a2e;--mut:#6b7385;--line:#dfe2e8;--nav:#0f1b33;--acc:#1e78f0;--g:#86d994;--y:#ffd84d;--r:#ff7f7f;--b:#8ec5ff;--n:#d5d9e0;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root{color-scheme:light}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:500 14px/1.45 "Inter",system-ui,sans-serif}
+.app{display:flex;min-height:100vh}
+.side{width:224px;background:var(--nav);color:#fff;padding:22px 14px;display:flex;flex-direction:column;gap:6px;flex-shrink:0}
+.logo{font-weight:700;font-size:20px;display:flex;align-items:center;gap:8px;padding:0 8px 22px}
+.logo svg{width:28px;height:28px}
+.side button.nv{all:unset;cursor:pointer;display:flex;align-items:center;gap:12px;box-sizing:border-box;padding:10px 12px;border-radius:8px;color:#d6dcea;font-size:13.5px}
+.side button.nv:hover{background:#1a2a4a}
+.side button.nv:focus-visible,.tab:focus-visible,.row:focus-visible,.sw button:focus-visible{outline:2px solid var(--b);outline-offset:2px}
+.side button.nv.on{background:var(--acc);color:#fff;font-weight:600}
+.side svg.i{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.me{margin-top:auto;padding-top:14px;border-top:1px solid #243558}
+.who{display:flex;gap:10px;align-items:center;margin-bottom:10px}
+.av{width:38px;height:38px;border-radius:50%;background:#fff;color:var(--nav);display:grid;place-items:center;font-weight:700}
+.who small{display:block;color:#9fb0cf;font-size:11.5px}
+.sw{display:flex;background:#1a2a4a;border-radius:8px;padding:3px}
+.sw button{all:unset;flex:1;text-align:center;padding:6px;border-radius:6px;cursor:pointer;font-size:12px;color:#c4cde0}
+.sw button.on{background:#fff;color:var(--nav);font-weight:700}
+main{flex:1;padding:28px 36px;min-width:0}
+h1{font-size:19px;margin:0}
+.sub{color:var(--mut);font-size:12.5px;margin:2px 0 24px}
+h2{font-size:16px;margin:0}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin-bottom:28px}
+.st{border-radius:6px;padding:14px 16px;color:#111a2e}
+
+.st b{font-weight:700}
+.st b{font-size:24px;display:block;line-height:1.2}
+.st span{font-size:12px}
+.g{background:var(--g)}.y{background:var(--y)}.r{background:var(--r)}.b{background:var(--b)}.n{background:var(--n)}
+
+.pill{display:inline-block;padding:3px 12px;border-radius:5px 10px 5px 10px;font-size:11px;font-weight:600;color:#111a2e}
+
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.tab{all:unset;cursor:pointer;padding:7px 14px;border-radius:20px;border:1px solid var(--line);font-size:13px}
+.tab.on{background:var(--nav);color:#fff;border-color:var(--nav)}
+.lst{border:1px solid var(--line);border-radius:8px;margin-bottom:28px;overflow:hidden}
+.al{all:unset;cursor:pointer;box-sizing:border-box;width:100%;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1.6fr) minmax(0,1.2fr) 44px 112px;gap:16px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);border-left:4px solid transparent}
+.al:last-child{border-bottom:0}
+
+.al:hover{background:var(--card)}
+
+.al:focus-visible{outline:2px solid var(--acc);outline-offset:-2px}
+.al small{color:var(--mut);font-size:13px}
+.al .pn{text-align:right;font-size:12.5px;font-variant-numeric:tabular-nums}.al .pill{justify-self:start}
+.lh{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1.6fr) minmax(0,1.2fr) 44px 112px;gap:16px;padding:9px 16px 9px 20px;font-size:12px;font-weight:600;color:var(--mut);background:var(--card);border-bottom:1px solid var(--line)}
+.bar{height:7px;background:var(--line);border-radius:4px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--acc);border-radius:4px}
+.tcch{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.tcch p{margin:2px 0 0;color:var(--mut);font-size:12.5px}
+.tot{min-width:180px}.tot b{font-size:22px}
+.blocks{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.blk{border:1px solid var(--line);border-radius:8px;padding:16px;background:var(--card)}
+.bt{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px}
+.bt h3{margin:0;font-size:14px}
+.bm{display:flex;justify-content:space-between;color:var(--mut);font-size:12px;margin:8px 0 12px}
+.cm{margin:0;padding:10px 12px;background:var(--bg);border-left:3px solid var(--acc);border-radius:4px;font-size:12.5px}
+.cm b{display:block;font-size:11.5px;color:var(--mut);margin-bottom:2px}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;max-width:720px}
+.cal div{min-height:64px;border:1px solid var(--line);border-radius:6px;padding:6px;font-size:12px}
+.cal .h{min-height:0;border:0;color:var(--mut);font-weight:600;text-align:center}
+.cal .z{border:0}
+.cal .t{border-color:var(--acc);font-weight:700}
+.cal .e{background:var(--y);color:#111a2e;border-color:var(--y)}
+.ev{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);max-width:720px}
+.ev b{background:var(--y);color:#111a2e;border-radius:6px;padding:4px 10px}
+.fl{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.fl .tabs{margin-bottom:0}
+.cf{font-size:12px;color:var(--mut)}
+.cf select{font:inherit;font-size:12px;color:var(--mut);border:0;border-bottom:1px dashed var(--line);background:transparent;padding:2px 4px;cursor:pointer}
+.cf select:focus-visible{outline:2px solid var(--acc)}
+.dt{padding:20px 20px 24px;border-bottom:1px solid var(--line);border-left:4px solid var(--acc);background:var(--bg)}
+.al small span{display:block;font-size:11.5px;opacity:.8}
+.bk{all:unset;cursor:pointer;color:var(--acc);font-weight:600;font-size:13px;margin-bottom:14px;display:inline-block}.bk:hover{text-decoration:underline}.bk:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.dp{font-size:10.5px;background:var(--b);color:#111a2e;border-radius:4px;padding:1px 6px;margin-left:4px;font-weight:600;white-space:nowrap}
+.blk{border:1px solid var(--line);border-radius:10px;padding:14px;background:var(--bg)}
+.blk h3{margin:0 0 10px;font-size:14px}.blk .cm{background:var(--card)}
+.kb{display:grid;grid-template-columns:repeat(5,minmax(240px,1fr));gap:14px;overflow-x:auto;padding-bottom:8px;align-items:start}
+.kc{background:var(--card);border-radius:12px;border-top:4px solid var(--line);padding:12px;display:flex;flex-direction:column;gap:12px;min-height:120px}
+.kh{display:flex;justify-content:space-between;align-items:center;font-size:13px}
+.kh span{background:var(--bg);border-radius:10px;padding:1px 9px;font-size:12px;font-weight:700}
+.ke{color:var(--mut);font-size:12.5px;margin:0;text-align:center;padding:16px 0}
+.wa{display:grid;grid-template-columns:300px 1fr;height:calc(100vh - 170px);min-height:480px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.wl{border-right:1px solid var(--line);overflow-y:auto;background:var(--bg)}
+.wc{all:unset;box-sizing:border-box;cursor:pointer;display:flex;gap:12px;align-items:center;width:100%;padding:12px 14px;border-bottom:1px solid var(--line)}
+.wc:hover{background:var(--card)}.wc.on{background:var(--card);box-shadow:inset 4px 0 0 var(--acc)}
+.wc:focus-visible{outline:2px solid var(--acc);outline-offset:-2px}
+.wav{width:42px;height:42px;border-radius:50%;background:var(--nav);color:#fff;display:grid;place-items:center;font-weight:700;flex-shrink:0}
+.wt{min-width:0;flex:1}.wt b{display:flex;justify-content:space-between;gap:8px;font-size:13.5px}
+.wt b i{font-style:normal;font-weight:500;font-size:11px;color:var(--mut);white-space:nowrap}
+.wt>span{display:block;color:var(--mut);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wr{display:flex;flex-direction:column;min-width:0;min-height:0;background:var(--card)}
+.wh{display:flex;gap:12px;align-items:center;padding:12px 16px;background:var(--bg);border-bottom:1px solid var(--line)}
+.wh small{display:block;color:var(--mut)}
+.wmsgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:8px}
+.wm{max-width:70%;padding:8px 12px 6px;border-radius:12px 12px 12px 2px;background:var(--bg);border:1px solid var(--line);align-self:flex-start;font-size:13.5px;overflow-wrap:anywhere}
+.wm.me{align-self:flex-end;background:var(--acc);color:#fff;border-color:var(--acc);border-radius:12px 12px 2px 12px}
+.wm i{display:block;font-style:normal;font-size:10.5px;opacity:.7;text-align:right;margin-top:2px}
+.wi{display:flex;gap:8px;padding:12px;background:var(--bg);border-top:1px solid var(--line)}
+.wi input{flex:1;min-width:0;padding:11px 14px;border:1px solid var(--line);border-radius:22px;font:inherit;background:var(--card);color:var(--tx)}
+.wi button{all:unset;cursor:pointer;background:var(--acc);color:#fff;padding:0 20px;border-radius:22px;font-weight:700;display:grid;place-items:center}
+.wi button:focus-visible,.wi input:focus-visible{outline:2px solid var(--nav);outline-offset:2px}
+@media(max-width:800px){.wa{grid-template-columns:1fr;grid-template-rows:170px 1fr;height:auto;min-height:620px}.wl{border-right:0;border-bottom:1px solid var(--line)}}
+.kb3{grid-template-columns:repeat(3,minmax(260px,1fr))}
+.ac{all:unset;box-sizing:border-box;cursor:pointer;display:block;width:100%;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px}
+.ac:hover{border-color:var(--acc)}.ac:focus-visible{outline:2px solid var(--acc)}
+.ac b{display:block;font-size:14px}.ac small{display:block;color:var(--mut);font-size:12.5px;margin:2px 0 10px}
+.am{display:flex;justify-content:space-between;color:var(--mut);font-size:12px;margin-top:8px}
+.ac.fl{border:2px solid #e5484d;padding:13px}
+.fi{display:inline-block;vertical-align:-3px;margin-left:6px;flex-shrink:0}
+.fnote{display:flex;gap:6px;align-items:flex-start;margin:10px 0 0;color:#c9302f;font-size:12px;font-weight:600}
+.fnote .fi{margin:0}
+.empty{color:var(--mut);padding:40px 0}
+@media(max-width:800px){.al{grid-template-columns:1fr 44px}.al b,.al small,.al .pill{grid-column:1/-1}.lh{display:none}.app{flex-direction:column}.side{width:auto;flex-direction:row;flex-wrap:wrap;padding:12px}.logo{padding:0 8px}.me{margin:0;border:0;padding:0;width:100%}main{padding:20px 16px}}
+
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="side" id="side"></aside>
+<main id="main"></main>
+</div>
+<script>
+const IC={home:'M3 11l9-8 9 8M5 10v10h14V10',list:'M4 6h16M4 12h16M4 18h16',users:'M12 12a4 4 0 100-8 4 4 0 000 8zM4 21c0-4 4-6 8-6s8 2 8 6',check:'M5 4h14v16H5zM9 12l2 2 4-4',file:'M6 3h9l4 4v14H6zM9 12h7M9 16h7',chat:'M4 5h16v11H9l-5 4z',cal:'M4 6h16v14H4zM4 10h16M8 3v4M16 3v4',gear:'M12 15a3 3 0 100-6 3 3 0 000 6zM12 3v3M12 18v3M3 12h3M18 12h3'};
+const NAV={prof:[['dash','Dashboard','home'],['tccs','Meus Alunos','list'],['msg','Mensagens','chat'],['cal','Calendário','cal']],
+aluno:[['dash','Dashboard','home'],['msg','Mensagens','chat'],['cal','Calendário','cal']]};
+const BL=['Introdução','Referencial teórico','Metodologia','Resultados','Conclusão'];
+const DT=['15/07','12/08','09/09','07/10','28/10'];
+const CM=['Boa delimitação do problema.','Inclua mais fontes dos últimos cinco anos.','Detalhe os critérios de seleção da amostra.','Aguardando dados para a análise.','Escreva as considerações a partir dos objetivos.'];
+const CUR=['Engenharia de Software','Sistemas de Informação'];
+const A=[
+{n:'João Silva',t:'IA na educação',s:'Em revisão',u:'22/07/2026',k:0,f:1,p:[100,85,50,10,0]},
+{n:'Maria Souza',t:'Análise de dados',s:'Pendente',u:'18/06/2026',k:0,f:1,p:[100,60,20,0,0]},
+{n:'Ana Santos',t:'UX em sistemas educacionais',s:'Corrigido',u:'27/06/2026',k:0,f:2,p:[100,100,70,35,0]},
+{n:'Pedro Lima',t:'Banco de dados em empresas',s:'Corrigido',u:'09/05/2026',k:1,f:2,p:[100,100,100,60,15]},
+{n:'Pabio Vittar',t:'Cibersegurança',s:'Em revisão',u:'03/05/2026',k:1,f:1,p:[90,40,0,0,0]},
+{n:'Carla Mendes',t:'Machine learning em diagnósticos',s:'Pendente',u:'14/09/2026',k:0,f:1,p:[100,70,30,0,0]},
+{n:'Rafael Costa',t:'Gamificação no ensino de programação',s:'Em revisão',u:'28/09/2026',k:0,f:2,p:[100,100,100,80,40]},
+{n:'Beatriz Alves',fl:1,fn:'Reenvio com erro de formatação.',t:'Acessibilidade em aplicativos web',s:'Corrigido',u:'25/09/2026',k:1,f:1,p:[100,55,10,0,0]},
+{n:'Thiago Nunes',t:'Computação em nuvem para pequenas empresas',s:'Em revisão',u:'30/09/2026',k:1,f:2,p:[100,100,85,45,5]},
+{n:'Lucas Prado e Camila Rocha',d:1,t:'Aplicativo de gestão financeira pessoal',s:'Pendente',u:'29/09/2026',k:0,f:1,p:[100,65,25,0,0]},
+{n:'Felipe Duarte e Larissa Gomes',d:1,t:'Internet das Coisas na agricultura',s:'Em revisão',u:'27/09/2026',k:0,f:2,p:[100,100,90,55,10]},
+{n:'Gustavo Ramos e Julia Martins',d:1,t:'Blockchain na gestão de documentos',s:'Corrigido',u:'26/09/2026',k:1,f:1,p:[100,90,60,15,0]},
+{n:'Renata Farias e Diego Moura',fl:1,fn:'Referências ausentes após a correção.',d:1,t:'Realidade aumentada na educação',s:'Corrigido',u:'24/09/2026',k:1,f:2,p:[100,100,100,70,30]}];
+const E=[{d:7,t:'Entrega do bloco Resultados',w:'todos'},{d:14,t:'Reunião de orientação com Ana Santos',w:'Ana Santos'},{d:19,t:'Reunião de orientação com a Prof. Gabriela',w:'João Silva'},{d:21,t:'Revisão da Metodologia de Pedro Lima',w:'Pedro Lima'},{d:28,t:'Entrega do bloco Conclusão',w:'todos'}];
+const COR={'Em revisão':'y','Em andamento':'b','Correção':'r','Enviado':'g','Concluído':'g','Pendente':'n','Corrigido':'g','Para correção':'y','Em correção':'r'};
+const pill=s=>`<span class="pill ${COR[s]}">${s}</span>`;
+const avg=a=>Math.round(a.p.reduce((x,y)=>x+y)/5);
+let S={role:'prof',view:'dash',fase:1,curso:-1,aluno:null,mc:0};
+
+const COLS=['Pendente','Em andamento','Para correção','Em correção','Concluído'];
+const CC={'Pendente':'#aeb5c2','Em andamento':'#5aa5ee','Para correção':'#f0c93a','Em correção':'#ff7f7f','Concluído':'#52b565','Em revisão':'#f0c93a','Corrigido':'#52b565'};
+const FLAG='<svg class="fi" width="16" height="16" viewBox="0 0 24 24" fill="#e5484d" stroke="#e5484d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Com problema"><path d="M5 21V4M5 4h12l-2 4 2 4H5"/></svg>';
+const DC=[['Pendente','Pendente'],['Em revisão','Em revisão'],['Corrigido','Corrigidos']];
+function bst(a,i){const p=a.p[i];if(p==100)return 'Concluído';if(p==0)return 'Pendente';
+ if(i==a.p.findIndex(x=>x>0&&x<100)){if(a.s=='Em revisão')return 'Para correção';if(a.s=='Corrigido')return 'Em correção'}
+ return 'Em andamento'}
+function tcc(a,ix){
+ const m=avg(a),st=BL.map((b,i)=>bst(a,i));
+ return `<section><div class="tcch"><div><h2>${a.t}</h2><p>${a.d?'Dupla':'Aluno'}: ${a.n}</p><p>Orientação: Prof.ª Gabriela</p></div>
+ <div class="tot"><b>${m}%</b> concluído<div class="bar"><i style="width:${m}%"></i></div></div></div>
+ ${a.fl&&S.role=='prof'?`<p class="fnote" style="margin:0 0 14px">${FLAG}Problema após a correção: ${a.fn}</p>`:''}<div class="kb">${COLS.map(c=>{const it=BL.map((b,i)=>i).filter(i=>st[i]==c);
+ return `<div class="kc" style="border-top-color:${CC[c]}"><div class="kh"><b>${c}</b><span>${it.length}</span></div>${it.length?it.map(i=>{const p=a.p[i];
+ return `<article class="blk"><h3>${BL[i]}</h3><div class="bar"><i style="width:${p}%"></i></div><div class="bm"><span>${p}% concluído</span><span>Entrega ${DT[i]}/2026</span></div><p class="cm"><b>Comentário da orientadora</b>${p==0?'Bloco ainda não iniciado.':CM[i]}</p></article>`}).join(''):'<p class="ke">Nenhum bloco</p>'}</div>`}).join('')}</div></section>`}
+const M=A.map(()=>[]);
+M[0]=[{f:'prof',t:'João, revisei a Introdução. Pode seguir para o Referencial.',h:'09:12'},{f:'aluno',t:'Obrigado, professora! Envio o Referencial até a próxima semana.',h:'09:40'}];
+M[1]=[{f:'prof',t:'Maria, como está a coleta dos dados?',h:'14:05'}];
+M[2]=[{f:'aluno',t:'Professora, posso enviar a Metodologia amanhã?',h:'16:20'}];
+M[9]=[{f:'aluno',t:'Professora, eu e a Camila já revisamos o Referencial.',h:'11:08'},{f:'prof',t:'Perfeito, me enviem até sexta.',h:'11:30'}];
+function send(){
+ const el=document.getElementById('mi');if(!el)return;const v=el.value.trim();if(!v)return;
+ M[S.role=='prof'?S.mc:0].push({f:S.role,t:v.replace(/</g,'&lt;'),h:new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})});
+ draw();document.getElementById('mi').focus()}
+const V={
+ dash(){
+  if(S.role=='prof') return `<h1>Olá, Professor(a) Gabriela</h1><p class="sub">Aqui está o resumo dos seus TCCs</p>
+  <div class="stats"><div class="st b"><b>${A.filter(a=>a.s=='Pendente').length}</b><span>Pendente</span></div><div class="st y"><b>${A.filter(a=>a.s=='Em revisão').length}</b><span>Em revisão</span></div><div class="st g"><b>${A.filter(a=>a.s=='Corrigido').length}</b><span>Corrigidos</span></div><div class="st r"><b>${A.filter(a=>a.fl).length}</b><span>Com problema (flag)</span></div></div>
+  <h2>Acompanhamento dos alunos</h2><div class="kb kb3" style="margin-top:14px">${DC.map(([k,t])=>{const it=A.map((a,i)=>[a,i]).filter(([a])=>a.s==k);
+  return `<div class="kc" style="border-top-color:${CC[k]}"><div class="kh"><b>${t}</b><span>${it.length}</span></div>${it.length?it.map(([a,i])=>`<button class="ac${a.fl?' fl':''}" data-i="${i}"><b>${a.n}${a.d?' <span class="dp">Dupla</span>':''}${a.fl?FLAG:''}</b><small>${a.t}</small><span class="bar"><i style="width:${avg(a)}%"></i></span><span class="am"><span>${avg(a)}% concluído</span><span>TCC ${a.f}</span></span>${a.fl?`<span class="fnote">${FLAG}${a.fn}</span>`:''}</button>`).join(''):'<p class="ke">Nenhum aluno</p>'}</div>`}).join('')}</div>`;
+  const a=A[0],m=avg(a),ok=a.p.filter(x=>x==100).length;
+  return `<h1>Olá, ${a.n}</h1><p class="sub">Acompanhe o andamento do seu TCC</p>
+  <div class="stats"><div class="st g"><b>${m}%</b><span>Conclusão geral</span></div><div class="st b"><b>${ok} de 5</b><span>Blocos concluídos</span></div><div class="st y"><b>07/10</b><span>Próxima entrega</span></div><div class="st r"><b>${a.p.filter(x=>x>0).length}</b><span>Comentários recebidos</span></div></div>${tcc(a,0)}`},
+ tccs(){
+  if(S.aluno!==null){const a=A[S.aluno];return `<button class="bk" data-back="1">&larr; Meus Alunos</button><h1>${a.n}</h1><p class="sub">TCC ${a.f}, ${CUR[a.k]}${a.d?', dupla':''}</p>${tcc(a,S.aluno)}`}
+  const L=A.map((a,i)=>[a,i]).filter(([a])=>a.f==S.fase&&(S.curso<0||a.k==S.curso));
+  return `<h1>Meus Alunos</h1><p class="sub">Escolha a fase e clique em um aluno para ver o TCC</p>
+  <div class="fl"><div class="tabs">${[1,2].map(f=>`<button class="tab ${f==S.fase?'on':''}" data-f="${f}">TCC ${f}</button>`).join('')}</div>
+  <label class="cf">Curso: <select id="cf" aria-label="Filtrar por curso"><option value="-1">Todos</option>${CUR.map((c,k)=>`<option value="${k}" ${k==S.curso?'selected':''}>${c}</option>`).join('')}</select></label></div>
+  <div class="lst"><div class="lh"><span>Aluno</span><span>Tema</span><span style="grid-column:3/5">Conclusão</span><span>Status</span></div>
+  ${L.length?L.map(([a,i])=>`<button class="al ${i==S.aluno?'on':''}" data-a="${i}"><b>${a.n}${a.d?' <span class="dp">Dupla</span>':''}${a.fl?FLAG:''}</b><small>${a.t}<span>${CUR[a.k]}</span></small><span class="bar"><i style="width:${avg(a)}%"></i></span><span class="pn">${avg(a)}%</span>${pill(a.s)}</button>`).join(''):'<p class="empty" style="padding:20px 16px;margin:0">Nenhum aluno nesta fase.</p>'}</div>`},
+ msg(){
+  const prof=S.role=='prof',ix=prof?S.mc:0,L=M[ix];
+  const rows=(prof?A.map((a,i)=>[i,a.n]):[[0,'Prof.ª Gabriela']]).map(([i,n])=>{const l=M[i][M[i].length-1];return `<button class="wc ${i==ix?'on':''}" data-c="${i}"><span class="wav">${n[0]}</span><span class="wt"><b>${n}<i>${l?l.h:''}</i></b><span>${l?l.t:'Sem mensagens'}</span></span></button>`}).join('');
+  const nm=prof?A[ix].n:'Prof.ª Gabriela',sb=prof?A[ix].t:'Orientadora';
+  return `<h1>Mensagens</h1><p class="sub">${prof?'Converse com seus alunos':'Converse com sua orientadora'}</p><div class="wa"><div class="wl">${rows}</div><div class="wr"><div class="wh"><span class="wav">${nm[0]}</span><div><b>${nm}</b><small>${sb}</small></div></div><div class="wmsgs" id="msgs">${L.length?L.map(m=>`<div class="wm ${m.f==S.role?'me':''}">${m.t}<i>${m.h}</i></div>`).join(''):'<p class="ke" style="margin:auto">Nenhuma mensagem ainda. Diga olá!</p>'}</div><div class="wi"><input id="mi" placeholder="Digite uma mensagem" aria-label="Mensagem" autocomplete="off"><button data-send="1">Enviar</button></div></div></div>`},
+ cal(){
+  const ev=E.filter(e=>S.role=='prof'||e.w=='todos'||e.w=='João Silva'),days=ev.map(e=>e.d);
+  let c=['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'].map(d=>`<div class="h">${d}</div>`).join('')+'<div class="z"></div>'.repeat(4);
+  for(let d=1;d<=31;d++)c+=`<div class="${days.includes(d)?'e':''} ${d==1?'t':''}">${d}</div>`;
+  return `<h1>Calendário</h1><p class="sub">Outubro de 2026</p><div class="cal">${c}</div><h2 style="margin:24px 0 4px">Próximos eventos</h2>
+  ${ev.map(e=>`<div class="ev"><b>${String(e.d).padStart(2,'0')}/10</b>${e.t}</div>`).join('')}`},
+ x(){return `<h1>${NAV[S.role].find(n=>n[0]==S.view)[1]}</h1><p class="empty">Esta tela não faz parte deste protótipo.</p>`}
+};
+
+function draw(){
+ const prof=S.role=='prof';
+ $side.innerHTML=`<div class="logo"><svg viewBox="0 0 24 24" fill="#fff"><path d="M12 3L1 9l11 6 9-4.9V17h2V9L12 3zM5 13.2v3.3c0 1.7 3.1 3.5 7 3.5s7-1.8 7-3.5v-3.3l-7 3.8-7-3.8z"/></svg>SGTCC</div>
+ ${NAV[S.role].map(([k,l,i])=>`<button class="nv ${S.view==k?'on':''}" data-v="${k}"><svg class="i" viewBox="0 0 24 24"><path d="${IC[i]}"/></svg>${l}</button>`).join('')}
+ <div class="me"><div class="who"><div class="av">${prof?'G':'J'}</div><div>${prof?'Prof. Gabriela':'João Silva'}<small>${prof?'Orientador':'Aluno'}</small></div></div>
+ <div class="sw"><button data-r="prof" class="${prof?'on':''}">Professor</button><button data-r="aluno" class="${prof?'':'on'}">Aluno</button></div></div>`;
+ $main.innerHTML=(V[S.view]||V.x)();
+ const ms=document.getElementById('msgs');if(ms)ms.scrollTop=ms.scrollHeight;
+}
+const $side=document.getElementById('side'),$main=document.getElementById('main');
+document.addEventListener('click',e=>{
+ if(e.target.closest('[data-send]'))return send();
+ const t=e.target.closest('[data-v],[data-r],[data-f],[data-a],[data-i],[data-back],[data-c]');if(!t)return;
+ const d=t.dataset;
+ if(d.v){S.view=d.v;if(d.v=='tccs')S.aluno=null}
+ if(d.back){S.aluno=null;scrollTo(0,0)}
+ if(d.c!==undefined)S.mc=+d.c;
+ if(d.r){S.role=d.r;S.view='dash'}
+ if(d.f!==undefined){S.fase=+d.f;S.aluno=null}
+ if(d.a!==undefined){S.aluno=+d.a;scrollTo(0,0)}
+ if(d.i!==undefined){S.aluno=+d.i;S.fase=A[S.aluno].f;S.curso=-1;S.view='tccs'}
+ draw();
+});
+document.addEventListener('change',e=>{if(e.target.id=='cf'){S.curso=+e.target.value;S.aluno=null;draw();document.getElementById('cf').focus()}});
+document.addEventListener('keydown',e=>{if(e.key=='Enter'&&e.target.id=='mi')send();if(e.key=='Enter'&&e.target.classList.contains('row'))e.target.click()});
+draw();
+</script>
+</body>
+</html>
