@@ -41,7 +41,19 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Logs do Firebase
-firebase-debug.log
-firestore-debug.log
-ui-debug.log
+# Logs e cache do Firebase
+.firebase/
+firebase-debug.log*
+firestore-debug.log*
+ui-debug.log*
+hub-debug.log*
+
+# Credenciais e Service Accounts do Firebase/GCP (NUNCA commitar)
+*serviceAccount*.json
+*service-account*.json
+*adminsdk*.json
+serviceAccountKey.json
+
+# Windows
+Thumbs.db
+ehthumbs.db
