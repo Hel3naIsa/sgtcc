@@ -6,7 +6,7 @@ import { requireSessao } from "@/lib/auth/server-session";
 import { ROTULO_PERFIL, homeDoPerfil } from "@/lib/auth/perfis";
 import { LogoutButton } from "@/components/layout/logout-button";
 
-export const instant = false;
+export const dynamic = "force-dynamic";
 
 async function Sidebar() {
   const sessao = await requireSessao();

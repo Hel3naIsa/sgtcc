@@ -4,7 +4,7 @@ import { destinoSeguro, homeDoPerfil } from "@/lib/auth/perfis";
 import { LoginForm } from "./login-form";
 
 export const metadata = { title: "Acesse sua conta — SGTCC" };
-export const instant = false;
+export const dynamic = "force-dynamic";
 
 export default async function LoginPage({
   searchParams,
