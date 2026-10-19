@@ -12,11 +12,12 @@ import { getClientSsoConfig } from "@/lib/auth/config";
 
 interface LoginFormProps {
   destino: string;
+  initialTab?: "login" | "cadastro";
 }
 
-export function LoginForm({ destino }: { destino: string }) {
+export function LoginForm({ destino, initialTab = "login" }: LoginFormProps) {
   const router = useRouter();
-  const [abaAtiva, setAbaAtiva] = useState<"login" | "cadastro">("login");
+  const [abaAtiva, setAbaAtiva] = useState<"login" | "cadastro">(initialTab);
 
   // Estado de Login
   const [identifier, setIdentifier] = useState("");
