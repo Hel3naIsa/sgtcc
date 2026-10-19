@@ -16,9 +16,9 @@ export const getSessaoServidor = cache(async (): Promise<AuthenticatedSession | 
   const cookie = (await headers()).get("cookie") ?? "";
   try {
     return await getAuthenticatedSession(new Request("http://localhost/", { headers: { cookie } }));
-  } catch (e) {
-    if (e instanceof AuthHttpError && (e.status === 401 || e.status === 403)) return null;
-    throw e;
+  } catch {
+    // Qualquer falha ao recuperar sessão em server component significa ausência de sessão válida.
+    return null;
   }
 });
 
