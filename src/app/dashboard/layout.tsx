@@ -6,6 +6,8 @@ import { requireSessao } from "@/lib/auth/server-session";
 import { ROTULO_PERFIL, homeDoPerfil } from "@/lib/auth/perfis";
 import { LogoutButton } from "@/components/layout/logout-button";
 
+export const instant = false;
+
 async function Sidebar() {
   const sessao = await requireSessao();
   const inicial = (sessao.nome || sessao.email || "U").charAt(0).toUpperCase();
