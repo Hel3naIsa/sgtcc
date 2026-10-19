@@ -32,6 +32,7 @@ async function criarUsuario(
   let uid: string;
   try {
     uid = (await auth.getUserByEmail(email)).uid;
+    await auth.updateUser(uid, { password: SENHA, displayName: nome });
   } catch {
     uid = (await auth.createUser({ email, password: SENHA, displayName: nome })).uid;
   }
