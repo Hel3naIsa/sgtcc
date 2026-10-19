@@ -1,6 +1,4 @@
-import { redirect } from "next/navigation";
-import { getSessaoServidor } from "@/lib/auth/server-session";
-import { destinoSeguro, homeDoPerfil } from "@/lib/auth/perfis";
+import { destinoSeguro } from "@/lib/auth/perfis";
 import { LoginForm } from "./login-form";
 
 export const metadata = { title: "Acesse sua conta — SGTCC" };
@@ -12,14 +10,7 @@ export default async function LoginPage({
   searchParams: Promise<{ next?: string; tab?: string }>;
 }) {
   const { next, tab } = await searchParams;
-  let sessao = null;
-  try {
-    sessao = await getSessaoServidor();
-  } catch {
-    sessao = null;
-  }
-  const destino = destinoSeguro(next);
-  if (sessao) redirect(destino ?? homeDoPerfil(sessao.perfil));
+  const destino = destinoSeguro(next) ?? "/dashboard";
 
-  return <LoginForm destino={destino ?? "/dashboard"} initialTab={tab === "cadastro" ? "cadastro" : "login"} />;
+  return <LoginForm destino={destino} initialTab={tab === "cadastro" ? "cadastro" : "login"} />;
 }
