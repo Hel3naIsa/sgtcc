@@ -18,6 +18,8 @@ function formatPrivateKey(key: string | undefined): string | undefined {
   return formatted.replace(/\\n/g, "\n").replace(/\r\n/g, "\n");
 }
 
+export let adminInitError: string | null = null;
+
 if (!getApps().length) {
   try {
     const serviceAccount = process.env.FIREBASE_SERVICE_ACCOUNT_KEY
@@ -50,6 +52,7 @@ if (!getApps().length) {
       });
     }
   } catch (error) {
+    adminInitError = error instanceof Error ? `${error.name}: ${error.message}` : String(error);
     console.error("Aviso: Falha ao inicializar Firebase Admin SDK:", error);
   }
 } else {

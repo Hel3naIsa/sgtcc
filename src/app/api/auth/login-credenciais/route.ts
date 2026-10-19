@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { adminDb } from "@/lib/firebase/admin";
+import { adminDb, adminInitError } from "@/lib/firebase/admin";
 import {
   createSessionCookie,
   SESSION_COOKIE_NAME,
