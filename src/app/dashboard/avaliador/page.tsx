@@ -5,7 +5,7 @@ import { CheckCircle2, ShieldCheck } from "lucide-react";
 import { PerfilEnum } from "@/types";
 
 export const metadata = { title: "Painel da Banca Avaliadora — SGTCC" };
-export const instant = false;
+export const dynamic = "force-dynamic";
 
 async function ConteudoAvaliador() {
   const sessao = await requireSessao(PerfilEnum.AVALIADOR);

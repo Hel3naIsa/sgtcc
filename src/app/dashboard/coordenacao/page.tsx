@@ -5,7 +5,7 @@ import { CheckCircle2, ShieldCheck } from "lucide-react";
 import { PerfilEnum } from "@/types";
 
 export const metadata = { title: "Painel da Coordenação — SGTCC" };
-export const instant = false;
+export const dynamic = "force-dynamic";
 
 async function ConteudoCoordenacao() {
   const sessao = await requireSessao(PerfilEnum.COORDENACAO, PerfilEnum.ADMIN);
