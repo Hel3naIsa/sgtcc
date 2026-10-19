@@ -27,9 +27,27 @@ const VARIANTE: Record<StatusEntrega, "default" | "secondary" | "destructive" | 
 async function Painel({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const sessao = await requireSessao();
-  // getPainelTcc já aplica a regra de visibilidade: TCC de outra pessoa vira "não encontrado".
   const painel = await getPainelTcc(sessao, id);
-  if (!painel) notFound();
+  // US01 AC3: Bloqueio de acesso indevido (Erro 403)
+  if (!painel) {
+    return (
+      <div className="flex flex-col items-center justify-center py-16 px-4 text-center space-y-4 max-w-md mx-auto">
+        <Badge variant="destructive" className="px-3 py-1 text-xs">
+          Erro 403 &bull; Acesso Negado
+        </Badge>
+        <h1 className="text-2xl font-bold tracking-tight">Acesso Não Autorizado</h1>
+        <p className="text-sm text-muted-foreground">
+          Você não possui vínculo acadêmico com este Trabalho de Conclusão de Curso. O acesso ao documento e histórico é restrito aos envolvidos (Aluno, Orientador e Banca associada).
+        </p>
+        <Link
+          href={homeDoPerfil(sessao.perfil)}
+          className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+        >
+          <ArrowLeft className="h-4 w-4" /> Voltar ao Meu Dashboard
+        </Link>
+      </div>
+    );
+  }
   const { tcc, itens } = painel;
 
   return (
