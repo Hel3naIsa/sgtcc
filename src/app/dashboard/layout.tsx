@@ -1,10 +1,10 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { LayoutDashboard } from "lucide-react";
 import { requireSessao } from "@/lib/auth/server-session";
 import { ROTULO_PERFIL, homeDoPerfil } from "@/lib/auth/perfis";
 import { LogoutButton } from "@/components/layout/logout-button";
+import { DashboardNav } from "@/components/layout/dashboard-nav";
 
 export const dynamic = "force-dynamic";
 
@@ -27,15 +27,8 @@ async function Sidebar() {
           <span className="font-bold text-xl tracking-tight text-white">SGTCC</span>
         </div>
 
-        <nav className="space-y-1">
-          <Link
-            href={homeDoPerfil(sessao.perfil)}
-            className="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-[#1e78f0] text-white text-sm font-semibold shadow-xs"
-          >
-            <LayoutDashboard className="h-4 w-4" />
-            <span>Dashboard</span>
-          </Link>
-        </nav>
+        {/* Navegação Dinâmica conforme perfil e protótipo */}
+        <DashboardNav perfil={sessao.perfil} />
       </div>
 
       {/* Perfil do Usuário e Logout */}
