@@ -68,7 +68,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <Sidebar />
       </Suspense>
       <main className="flex-1 p-6 sm:p-10 bg-[#ffffff] min-w-0 overflow-y-auto">
-        <div className="max-w-4xl mx-auto w-full">
+        <div className="max-w-6xl mx-auto w-full">
           {children}
         </div>
       </main>
