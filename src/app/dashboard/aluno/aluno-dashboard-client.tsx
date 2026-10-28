@@ -3,11 +3,10 @@
 import React from "react";
 import Link from "next/link";
 import { StatCard } from "@/components/ui/stat-card";
-import { StatusPill } from "@/components/ui/status-pill";
 import { ProgressBar } from "@/components/ui/progress-bar";
-import { ROTULO_STATUS_TCC, ROTULO_STATUS_ENTREGA, formatarData } from "@/components/layout/status";
 import type { TccResumo, PainelTcc } from "@/lib/data/queries";
-import { BookOpen, Calendar, MessageSquare, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Calendar, MessageSquare, ArrowRight } from "lucide-react";
+import { SALAS_ETAPAS_MOCK } from "./dados-etapas";
 
 interface AlunoDashboardClientProps {
   nomeAluno: string;
@@ -15,162 +14,173 @@ interface AlunoDashboardClientProps {
   detalhesPrincipal: PainelTcc | null;
 }
 
+const COLUNAS_KANBAN = [
+  { key: "Pendente", label: "Pendente", corBorda: "#aeb5c2" },
+  { key: "Em andamento", label: "Em andamento", corBorda: "#5aa5ee" },
+  { key: "Para correção", label: "Para correção", corBorda: "#f0c93a" },
+  { key: "Em correção", label: "Em correção", corBorda: "#ff7f7f" },
+  { key: "Concluído", label: "Concluído", corBorda: "#52b565" },
+] as const;
+
 export function AlunoDashboardClient({
   nomeAluno,
   tccs,
-  detalhesPrincipal,
 }: AlunoDashboardClientProps) {
   const tccPrincipal = tccs[0] ?? null;
+  const blocos = SALAS_ETAPAS_MOCK;
 
-  // Estatísticas baseadas nos marcos do TCC principal
-  const marcos = detalhesPrincipal?.itens ?? [];
-  const totalMarcos = marcos.length;
-  const marcosConcluidos = marcos.filter((m) => m.statusEfetivo === "CONCLUIDA").length;
-  const porcentagemGeral = totalMarcos > 0 ? Math.round((marcosConcluidos / totalMarcos) * 100) : 0;
-
-  // Próxima entrega pendente
-  const proximaEntrega = marcos.find((m) => m.statusEfetivo !== "CONCLUIDA");
-
-  // Total de feedbacks recebidos
-  const totalFeedbacks = marcos.reduce((acc, m) => acc + m.feedbacks.length, 0);
+  const totalBlocos = blocos.length;
+  const mediaProgressoGeral =
+    totalBlocos > 0 ? Math.round(blocos.reduce((acc, b) => acc + b.progresso, 0) / totalBlocos) : 0;
+  const concluidos = blocos.filter((b) => b.progresso === 100).length;
 
   return (
     <div className="space-y-8 w-full">
-      {/* Cabeçalho no estilo do protótipo com tipografia aprimorada */}
+      {/* Cabeçalho */}
       <div className="border-b border-[#dfe2e8] pb-4">
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#111a2e]">
           Olá, {nomeAluno}
         </h1>
         <p className="text-sm text-[#6b7385] mt-1">
-          Acompanhe o andamento do seu TCC, consulte feedbacks do orientador e envie novas versões
+          Acompanhe o andamento do seu TCC. Clique em qualquer etapa para entrar na sala com as postagens do professor e envio.
         </p>
       </div>
 
-      {/* Stats Cards com dimensões mais confortáveis */}
+      {/* Stats Cards com as métricas do protótipo */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
         <StatCard
           label="Conclusão Geral"
-          value={`${porcentagemGeral}%`}
+          value={`${mediaProgressoGeral}%`}
           variant="green"
           className="p-5"
         />
         <StatCard
-          label="Marcos Concluídos"
-          value={`${marcosConcluidos} de ${totalMarcos || 1}`}
+          label="Blocos Concluídos"
+          value={`${concluidos} de ${totalBlocos}`}
           variant="blue"
           className="p-5"
         />
         <StatCard
-          label="Próximo Prazo"
-          value={proximaEntrega ? formatarData(proximaEntrega.marco.dataLimite) : "Em dia"}
+          label="Próxima Entrega"
+          value="07/10/2026"
           variant="yellow"
           icon={<Calendar className="w-5 h-5" />}
           className="p-5"
         />
         <StatCard
-          label="Feedbacks Recebidos"
-          value={totalFeedbacks}
+          label="Comentários Recebidos"
+          value={blocos.filter((b) => b.progresso > 0).length}
           variant="red"
           icon={<MessageSquare className="w-5 h-5" />}
           className="p-5"
         />
       </div>
 
-      {/* Detalhes do Trabalho e Barra de Progresso com mais espaço e respiro */}
-      {tccPrincipal ? (
-        <section className="border border-[#dfe2e8] rounded-[12px] p-6 sm:p-8 bg-white shadow-xs space-y-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#dfe2e8] pb-6">
-            <div className="space-y-2 max-w-2xl">
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#1e78f0]">
-                  Trabalho de Conclusão de Curso
-                </span>
-                <StatusPill status={ROTULO_STATUS_TCC[tccPrincipal.statusGeral] ?? tccPrincipal.statusGeral} />
-              </div>
-              <h2 className="text-xl sm:text-2xl font-bold text-[#111a2e] leading-snug">
-                {tccPrincipal.titulo}
-              </h2>
-              <p className="text-sm text-[#6b7385]">
-                Orientador(a): <span className="font-semibold text-[#111a2e]">{tccPrincipal.orientadorNome}</span>
-              </p>
-            </div>
-
-            <div className="min-w-[220px] space-y-2 bg-[#f4f5f7] p-4 rounded-xl border border-[#dfe2e8]">
-              <div className="flex justify-between items-baseline">
-                <span className="text-xs font-semibold text-[#6b7385] uppercase tracking-wider">Progresso</span>
-                <b className="text-2xl font-bold text-[#111a2e]">{porcentagemGeral}%</b>
-              </div>
-              <ProgressBar value={porcentagemGeral} className="h-2.5" />
-            </div>
+      {/* Cabeçalho do TCC do aluno */}
+      <div className="border border-[#dfe2e8] rounded-[10px] p-6 bg-white shadow-xs space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+          <div>
+            <span className="text-xs font-bold text-[#1e78f0] uppercase tracking-wider">
+              {tccPrincipal ? "Trabalho de Conclusão de Curso" : "TCC em Elaboração"}
+            </span>
+            <h2 className="text-xl font-bold text-[#111a2e] mt-1">
+              {tccPrincipal?.titulo ?? "Inteligência Artificial Aplicada à Educação"}
+            </h2>
+            <p className="text-xs text-[#6b7385] mt-1">
+              Aluno: <span className="font-semibold text-[#111a2e]">{nomeAluno}</span> &bull; Orientação:{" "}
+              <span className="font-semibold text-[#111a2e]">
+                {tccPrincipal?.orientadorNome ?? "Prof.ª Joana Jordão"}
+              </span>
+            </p>
           </div>
 
-          {/* Marcos e Entregas (Blocos do TCC) em grade ampla */}
-          <div className="space-y-5">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-              <div>
-                <h3 className="text-base font-bold text-[#111a2e]">
-                  Etapas e Entregas do Semestre
-                </h3>
-                <p className="text-xs text-[#6b7385]">
-                  Cronograma oficial de acompanhamento e marcos obrigatórios
-                </p>
-              </div>
-              <Link
-                href={`/dashboard/tcc/${tccPrincipal.id}`}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#1e78f0] hover:bg-[#1666d3] text-white text-xs font-semibold transition-colors shadow-xs w-fit"
-              >
-                <span>Acessar histórico e submissões</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
+          <div className="min-w-[190px] space-y-1.5 bg-[#f4f5f7] p-3.5 rounded-lg border border-[#dfe2e8]">
+            <div className="flex justify-between items-baseline text-xs">
+              <span className="text-[#6b7385] font-medium">Progresso Geral</span>
+              <b className="text-xl font-bold text-[#111a2e]">{mediaProgressoGeral}%</b>
             </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-              {marcos.map((item, idx) => {
-                const statusStr = ROTULO_STATUS_ENTREGA[item.statusEfetivo] ?? item.statusEfetivo;
-                const prazo = formatarData(item.marco.dataLimite);
-
-                return (
-                  <article
-                    key={item.marco.id}
-                    className="border border-[#dfe2e8] rounded-[10px] p-5 bg-[#f4f5f7] hover:border-[#b8c2d1] transition-all flex flex-col justify-between space-y-4 shadow-2xs"
-                  >
-                    <div className="space-y-2">
-                      <div className="flex items-start justify-between gap-2">
-                        <h4 className="text-sm font-bold text-[#111a2e] leading-snug">
-                          {idx + 1}. {item.marco.titulo}
-                        </h4>
-                        <StatusPill status={statusStr} />
-                      </div>
-                      <p className="text-xs text-[#6b7385]">
-                        Prazo limite: <span className="font-semibold text-[#111a2e]">{prazo}</span>
-                      </p>
-                    </div>
-
-                    <div className="pt-3 border-t border-[#dfe2e8] text-xs text-[#6b7385] space-y-1.5">
-                      <div className="flex justify-between">
-                        <span>Arquivos enviados:</span>
-                        <span className="font-semibold text-[#111a2e]">{item.versoes.length} versão(ões)</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Feedbacks recebidos:</span>
-                        <span className="font-semibold text-[#111a2e]">{item.feedbacks.length} comentário(s)</span>
-                      </div>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
+            <ProgressBar value={mediaProgressoGeral} className="h-2" />
           </div>
-        </section>
-      ) : (
-        <div className="border border-dashed border-[#dfe2e8] rounded-[12px] p-12 text-center space-y-3 bg-white">
-          <BookOpen className="w-10 h-10 text-[#6b7385] mx-auto" />
-          <h3 className="text-base font-bold text-[#111a2e]">Nenhum TCC ativo no momento</h3>
-          <p className="text-xs text-[#6b7385] max-w-sm mx-auto">
-            Você ainda não foi vinculado a um TCC neste semestre letivo. Entre em contato com a coordenação.
-          </p>
         </div>
-      )}
+      </div>
+
+      {/* Estrutura Exata do Protótipo: Colunas Kanban Clicáveis para Páginas */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h3 className="text-base font-bold text-[#111a2e]">
+              Etapas e Blocos de Trabalho
+            </h3>
+            <p className="text-xs text-[#6b7385]">
+              Clique em qualquer bloco para acessar a sala da etapa com o mural de postagens do professor e área de submissão.
+            </p>
+          </div>
+        </div>
+
+        {/* Grade de 5 Colunas do Protótipo */}
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3.5 overflow-x-auto pb-4 items-start">
+          {COLUNAS_KANBAN.map((col) => {
+            const blocosDaColuna = blocos.filter((b) => b.statusKanban === col.key);
+
+            return (
+              <div
+                key={col.key}
+                className="bg-[#f4f5f7] rounded-[12px] p-3 border-t-4 flex flex-col gap-3 min-h-[160px] shadow-2xs"
+                style={{ borderTopColor: col.corBorda }}
+              >
+                {/* Topo da Coluna */}
+                <div className="flex items-center justify-between text-xs font-bold text-[#111a2e] px-1">
+                  <span>{col.label}</span>
+                  <span className="bg-white border border-[#dfe2e8] rounded-full px-2 py-0.5 text-[11px] font-bold text-[#111a2e]">
+                    {blocosDaColuna.length}
+                  </span>
+                </div>
+
+                {/* Blocos que Navegam para a Página da Etapa */}
+                {blocosDaColuna.length === 0 ? (
+                  <p className="text-xs text-[#6b7385] text-center py-6 italic">
+                    Nenhum bloco
+                  </p>
+                ) : (
+                  blocosDaColuna.map((bloco) => (
+                    <Link
+                      key={bloco.slug}
+                      href={`/dashboard/aluno/etapa/${bloco.slug}`}
+                      className="text-left w-full border border-[#dfe2e8] rounded-[10px] p-3.5 bg-white hover:border-[#1e78f0] hover:shadow-xs transition-all cursor-pointer group block"
+                    >
+                      <div className="flex items-start justify-between gap-1 mb-2">
+                        <h4 className="text-xs font-bold text-[#111a2e] group-hover:text-[#1e78f0] transition-colors leading-snug">
+                          {bloco.titulo}
+                        </h4>
+                        <ArrowRight className="w-3.5 h-3.5 text-[#6b7385] opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all shrink-0" />
+                      </div>
+
+                      {/* Barra de Progresso do Bloco */}
+                      <ProgressBar value={bloco.progresso} className="h-1.5 mb-2" />
+
+                      {/* Métricas do Bloco */}
+                      <div className="flex justify-between items-center text-[11px] text-[#6b7385] mb-2.5 font-medium">
+                        <span>{bloco.progresso}% concluído</span>
+                        <span>Entrega {bloco.dataEntrega}</span>
+                      </div>
+
+                      {/* Comentário da Orientadora */}
+                      <div className="p-2.5 bg-[#f4f5f7] border-l-2 border-[#1e78f0] rounded-[4px] text-[11.5px] text-[#111a2e]">
+                        <b className="block text-[10px] text-[#6b7385] uppercase tracking-wider mb-0.5">
+                          Comentário da orientadora
+                        </b>
+                        <p className="line-clamp-2 leading-relaxed text-[#111a2e]">
+                          {bloco.comentarioOrientadora}
+                        </p>
+                      </div>
+                    </Link>
+                  ))
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }

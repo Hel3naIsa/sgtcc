@@ -42,51 +42,55 @@ export function OrientadorDashboardClient({ nomeOrientador, tccs }: OrientadorDa
   }, [tccs, filtro, busca]);
 
   return (
-    <div className="space-y-6">
-      {/* Cabeçalho no estilo do protótipo */}
-      <div>
-        <h1 className="text-xl font-bold tracking-tight text-[#111a2e]">
+    <div className="space-y-8 w-full">
+      {/* Cabeçalho Padronizado */}
+      <div className="border-b border-[#dfe2e8] pb-4">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#111a2e]">
           Olá, Prof. {nomeOrientador}
         </h1>
-        <p className="text-[12.5px] text-[#6b7385] mt-0.5">
-          Aqui está o resumo dos seus orientandos e TCCs no semestre atual
+        <p className="text-sm text-[#6b7385] mt-1">
+          Painel centralizado de gestão e acompanhamento de alunos orientandos no semestre atual
         </p>
       </div>
 
-      {/* Stats Cards com as cores e visual do protótipo */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+      {/* Stats Cards Padronizados */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
         <StatCard
           label="Total de Orientandos"
           value={stats.total}
           variant="blue"
           icon={<Users className="w-5 h-5" />}
+          className="p-5"
         />
         <StatCard
           label="Em Andamento"
           value={stats.emAndamento}
           variant="yellow"
           icon={<BookOpen className="w-5 h-5" />}
+          className="p-5"
         />
         <StatCard
           label="Aguardando Banca"
           value={stats.aguardandoBanca}
           variant="neutral"
           icon={<AlertCircle className="w-5 h-5" />}
+          className="p-5"
         />
         <StatCard
           label="Concluídos / Defendidos"
           value={stats.aprovados}
           variant="green"
+          className="p-5"
         />
       </div>
 
-      {/* Controles de Filtro e Busca (Tabs arredondadas do protótipo) */}
+      {/* Controles de Filtro e Busca */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-2">
         <div className="flex items-center gap-2 flex-wrap">
           <button
             type="button"
             onClick={() => setFiltro("todos")}
-            className={`px-3.5 py-1.5 rounded-full text-[13px] border transition-colors cursor-pointer ${
+            className={`px-4 py-2 rounded-full text-xs sm:text-[13px] border transition-colors cursor-pointer ${
               filtro === "todos"
                 ? "bg-[#0f1b33] text-white border-[#0f1b33] font-medium"
                 : "border-[#dfe2e8] bg-white text-[#111a2e] hover:bg-[#f4f5f7]"
@@ -97,7 +101,7 @@ export function OrientadorDashboardClient({ nomeOrientador, tccs }: OrientadorDa
           <button
             type="button"
             onClick={() => setFiltro("EM_ANDAMENTO")}
-            className={`px-3.5 py-1.5 rounded-full text-[13px] border transition-colors cursor-pointer ${
+            className={`px-4 py-2 rounded-full text-xs sm:text-[13px] border transition-colors cursor-pointer ${
               filtro === "EM_ANDAMENTO"
                 ? "bg-[#0f1b33] text-white border-[#0f1b33] font-medium"
                 : "border-[#dfe2e8] bg-white text-[#111a2e] hover:bg-[#f4f5f7]"
@@ -108,7 +112,7 @@ export function OrientadorDashboardClient({ nomeOrientador, tccs }: OrientadorDa
           <button
             type="button"
             onClick={() => setFiltro("AGUARDANDO_BANCA")}
-            className={`px-3.5 py-1.5 rounded-full text-[13px] border transition-colors cursor-pointer ${
+            className={`px-4 py-2 rounded-full text-xs sm:text-[13px] border transition-colors cursor-pointer ${
               filtro === "AGUARDANDO_BANCA"
                 ? "bg-[#0f1b33] text-white border-[#0f1b33] font-medium"
                 : "border-[#dfe2e8] bg-white text-[#111a2e] hover:bg-[#f4f5f7]"
@@ -119,7 +123,7 @@ export function OrientadorDashboardClient({ nomeOrientador, tccs }: OrientadorDa
           <button
             type="button"
             onClick={() => setFiltro("APROVADO")}
-            className={`px-3.5 py-1.5 rounded-full text-[13px] border transition-colors cursor-pointer ${
+            className={`px-4 py-2 rounded-full text-xs sm:text-[13px] border transition-colors cursor-pointer ${
               filtro === "APROVADO"
                 ? "bg-[#0f1b33] text-white border-[#0f1b33] font-medium"
                 : "border-[#dfe2e8] bg-white text-[#111a2e] hover:bg-[#f4f5f7]"
@@ -130,22 +134,21 @@ export function OrientadorDashboardClient({ nomeOrientador, tccs }: OrientadorDa
         </div>
 
         {/* Input de Busca */}
-        <div className="relative min-w-[200px] sm:w-64">
+        <div className="relative min-w-[220px] sm:w-72">
           <Search className="absolute left-3 top-2.5 h-4 w-4 text-[#6b7385]" />
           <input
             type="text"
             placeholder="Buscar por aluno ou tema..."
             value={busca}
             onChange={(e) => setBusca(e.target.value)}
-            className="w-full pl-9 pr-3 py-1.5 text-xs bg-[#f4f5f7] border border-[#dfe2e8] rounded-full focus:outline-none focus:ring-1 focus:ring-[#1e78f0] focus:bg-white text-[#111a2e]"
+            className="w-full pl-9 pr-3 py-2 text-xs bg-[#f4f5f7] border border-[#dfe2e8] rounded-full focus:outline-none focus:ring-1 focus:ring-[#1e78f0] focus:bg-white text-[#111a2e]"
           />
         </div>
       </div>
 
-      {/* Lista de Orientandos com Grid Desktop e Cards Mobile (RNF02 e US12-AC2) */}
-      <div className="border border-[#dfe2e8] rounded-[8px] overflow-hidden bg-white shadow-xs">
-        {/* Cabeçalho da Lista para Desktop */}
-        <div className="hidden md:grid grid-cols-[1.4fr_1.8fr_1fr_120px_40px] gap-4 px-5 py-2.5 bg-[#f4f5f7] border-b border-[#dfe2e8] text-xs font-semibold text-[#6b7385]">
+      {/* Lista de Orientandos */}
+      <div className="border border-[#dfe2e8] rounded-[10px] overflow-hidden bg-white shadow-xs">
+        <div className="hidden md:grid grid-cols-[1.4fr_1.8fr_1fr_120px_40px] gap-4 px-6 py-3 bg-[#f4f5f7] border-b border-[#dfe2e8] text-xs font-semibold text-[#6b7385]">
           <span>Aluno</span>
           <span>Tema / Título</span>
           <span>Progresso</span>
@@ -154,7 +157,7 @@ export function OrientadorDashboardClient({ nomeOrientador, tccs }: OrientadorDa
         </div>
 
         {tccsFiltrados.length === 0 ? (
-          <div className="p-8 text-center text-sm text-[#6b7385]">
+          <div className="p-10 text-center text-sm text-[#6b7385]">
             Nenhum orientando encontrado para o filtro selecionado.
           </div>
         ) : (
@@ -172,9 +175,8 @@ export function OrientadorDashboardClient({ nomeOrientador, tccs }: OrientadorDa
                 <Link
                   key={t.id}
                   href={`/dashboard/tcc/${t.id}`}
-                  className="block p-4 sm:px-5 sm:py-3.5 hover:bg-[#f4f5f7] transition-colors group"
+                  className="block p-4 sm:px-6 sm:py-4 hover:bg-[#f4f5f7] transition-colors group"
                 >
-                  {/* Visão Desktop: Grid Alinhado */}
                   <div className="hidden md:grid grid-cols-[1.4fr_1.8fr_1fr_120px_40px] gap-4 items-center">
                     <div className="min-w-0">
                       <b className="block text-sm font-semibold text-[#111a2e] truncate group-hover:text-[#1e78f0] transition-colors">
@@ -189,7 +191,7 @@ export function OrientadorDashboardClient({ nomeOrientador, tccs }: OrientadorDa
                     </div>
 
                     <div className="space-y-1 pr-2">
-                      <ProgressBar value={estimativaProgresso} />
+                      <ProgressBar value={estimativaProgresso} className="h-2" />
                       <div className="flex justify-between text-[11px] text-[#6b7385] font-mono">
                         <span>{estimativaProgresso}%</span>
                       </div>
@@ -204,8 +206,8 @@ export function OrientadorDashboardClient({ nomeOrientador, tccs }: OrientadorDa
                     </div>
                   </div>
 
-                  {/* Visão Mobile: Cards Verticais Empilhados (US12-AC2) */}
-                  <div className="flex md:hidden flex-col gap-2">
+                  {/* Visão Mobile */}
+                  <div className="flex md:hidden flex-col gap-2.5">
                     <div className="flex items-start justify-between gap-2">
                       <div>
                         <b className="text-sm font-semibold text-[#111a2e] block group-hover:text-[#1e78f0]">
@@ -223,7 +225,7 @@ export function OrientadorDashboardClient({ nomeOrientador, tccs }: OrientadorDa
                         <span>Progresso estimado</span>
                         <span className="font-semibold">{estimativaProgresso}%</span>
                       </div>
-                      <ProgressBar value={estimativaProgresso} />
+                      <ProgressBar value={estimativaProgresso} className="h-2" />
                     </div>
                   </div>
                 </Link>

@@ -45,46 +45,49 @@ export function AvaliadorDashboardClient({ nomeAvaliador, tccs }: AvaliadorDashb
   }, [tccs, tab, busca]);
 
   return (
-    <div className="space-y-6">
-      {/* Cabeçalho */}
-      <div>
-        <h1 className="text-xl font-bold tracking-tight text-[#111a2e]">
+    <div className="space-y-8 w-full">
+      {/* Cabeçalho Padronizado */}
+      <div className="border-b border-[#dfe2e8] pb-4">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#111a2e]">
           Olá, Prof. {nomeAvaliador}
         </h1>
-        <p className="text-[12.5px] text-[#6b7385] mt-0.5">
-          Painel centralizado de avaliação de bancas de TCC atribuídas a você
+        <p className="text-sm text-[#6b7385] mt-1">
+          Painel centralizado de avaliação de bancas de TCC e monografias atribuídas a você
         </p>
       </div>
 
-      {/* Stats Cards com as cores do protótipo */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+      {/* Stats Cards Padronizados */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-5">
         <StatCard
           label="Total de Bancas"
           value={stats.total}
           variant="blue"
           icon={<Award className="w-5 h-5" />}
+          className="p-5"
         />
         <StatCard
           label="Prontos para Avaliar"
           value={stats.paraAvaliar}
           variant="yellow"
           icon={<FileText className="w-5 h-5" />}
+          className="p-5"
         />
         <StatCard
           label="Bancas Concluídas"
           value={stats.concluidos}
           variant="green"
           icon={<CheckCircle2 className="w-5 h-5" />}
+          className="p-5"
         />
       </div>
 
       {/* Controles de Filtro e Busca */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-2">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           <button
             type="button"
             onClick={() => setTab("todos")}
-            className={`px-3.5 py-1.5 rounded-full text-[13px] border transition-colors cursor-pointer ${
+            className={`px-4 py-2 rounded-full text-xs sm:text-[13px] border transition-colors cursor-pointer ${
               tab === "todos"
                 ? "bg-[#0f1b33] text-white border-[#0f1b33] font-medium"
                 : "border-[#dfe2e8] bg-white text-[#111a2e] hover:bg-[#f4f5f7]"
@@ -95,7 +98,7 @@ export function AvaliadorDashboardClient({ nomeAvaliador, tccs }: AvaliadorDashb
           <button
             type="button"
             onClick={() => setTab("AGUARDANDO_BANCA")}
-            className={`px-3.5 py-1.5 rounded-full text-[13px] border transition-colors cursor-pointer ${
+            className={`px-4 py-2 rounded-full text-xs sm:text-[13px] border transition-colors cursor-pointer ${
               tab === "AGUARDANDO_BANCA"
                 ? "bg-[#0f1b33] text-white border-[#0f1b33] font-medium"
                 : "border-[#dfe2e8] bg-white text-[#111a2e] hover:bg-[#f4f5f7]"
@@ -106,7 +109,7 @@ export function AvaliadorDashboardClient({ nomeAvaliador, tccs }: AvaliadorDashb
           <button
             type="button"
             onClick={() => setTab("DEFENDIDO")}
-            className={`px-3.5 py-1.5 rounded-full text-[13px] border transition-colors cursor-pointer ${
+            className={`px-4 py-2 rounded-full text-xs sm:text-[13px] border transition-colors cursor-pointer ${
               tab === "DEFENDIDO"
                 ? "bg-[#0f1b33] text-white border-[#0f1b33] font-medium"
                 : "border-[#dfe2e8] bg-white text-[#111a2e] hover:bg-[#f4f5f7]"
@@ -116,22 +119,21 @@ export function AvaliadorDashboardClient({ nomeAvaliador, tccs }: AvaliadorDashb
           </button>
         </div>
 
-        <div className="relative min-w-[200px] sm:w-64">
+        <div className="relative min-w-[220px] sm:w-72">
           <Search className="absolute left-3 top-2.5 h-4 w-4 text-[#6b7385]" />
           <input
             type="text"
             placeholder="Buscar por aluno, tema ou orientador..."
             value={busca}
             onChange={(e) => setBusca(e.target.value)}
-            className="w-full pl-9 pr-3 py-1.5 text-xs bg-[#f4f5f7] border border-[#dfe2e8] rounded-full focus:outline-none focus:ring-1 focus:ring-[#1e78f0] focus:bg-white text-[#111a2e]"
+            className="w-full pl-9 pr-3 py-2 text-xs bg-[#f4f5f7] border border-[#dfe2e8] rounded-full focus:outline-none focus:ring-1 focus:ring-[#1e78f0] focus:bg-white text-[#111a2e]"
           />
         </div>
       </div>
 
       {/* Lista de Trabalhos para Avaliação */}
-      <div className="border border-[#dfe2e8] rounded-[8px] overflow-hidden bg-white shadow-xs">
-        {/* Cabeçalho Desktop */}
-        <div className="hidden md:grid grid-cols-[1.5fr_2fr_1.2fr_110px_40px] gap-4 px-5 py-2.5 bg-[#f4f5f7] border-b border-[#dfe2e8] text-xs font-semibold text-[#6b7385]">
+      <div className="border border-[#dfe2e8] rounded-[10px] overflow-hidden bg-white shadow-xs">
+        <div className="hidden md:grid grid-cols-[1.5fr_2fr_1.2fr_110px_40px] gap-4 px-6 py-3 bg-[#f4f5f7] border-b border-[#dfe2e8] text-xs font-semibold text-[#6b7385]">
           <span>Aluno</span>
           <span>Tema do TCC</span>
           <span>Orientador</span>
@@ -140,7 +142,7 @@ export function AvaliadorDashboardClient({ nomeAvaliador, tccs }: AvaliadorDashb
         </div>
 
         {tccsFiltrados.length === 0 ? (
-          <div className="p-8 text-center text-sm text-[#6b7385]">
+          <div className="p-10 text-center text-sm text-[#6b7385]">
             Nenhum trabalho de banca encontrado.
           </div>
         ) : (
@@ -152,9 +154,8 @@ export function AvaliadorDashboardClient({ nomeAvaliador, tccs }: AvaliadorDashb
                 <Link
                   key={t.id}
                   href={`/dashboard/tcc/${t.id}`}
-                  className="block p-4 sm:px-5 sm:py-3.5 hover:bg-[#f4f5f7] transition-colors group"
+                  className="block p-4 sm:px-6 sm:py-4 hover:bg-[#f4f5f7] transition-colors group"
                 >
-                  {/* Visão Desktop */}
                   <div className="hidden md:grid grid-cols-[1.5fr_2fr_1.2fr_110px_40px] gap-4 items-center">
                     <div className="min-w-0">
                       <b className="block text-sm font-semibold text-[#111a2e] truncate group-hover:text-[#1e78f0] transition-colors">
@@ -169,7 +170,7 @@ export function AvaliadorDashboardClient({ nomeAvaliador, tccs }: AvaliadorDashb
                     </div>
 
                     <div className="min-w-0">
-                      <span className="text-xs text-[#111a2e] block truncate">{t.orientadorNome}</span>
+                      <span className="text-xs text-[#111a2e] block truncate font-medium">{t.orientadorNome}</span>
                       <small className="text-[11px] text-[#6b7385]">Orientador Docente</small>
                     </div>
 
@@ -182,8 +183,7 @@ export function AvaliadorDashboardClient({ nomeAvaliador, tccs }: AvaliadorDashb
                     </div>
                   </div>
 
-                  {/* Visão Mobile */}
-                  <div className="flex md:hidden flex-col gap-2">
+                  <div className="flex md:hidden flex-col gap-2.5">
                     <div className="flex items-start justify-between gap-2">
                       <div>
                         <b className="text-sm font-semibold text-[#111a2e] block group-hover:text-[#1e78f0]">
